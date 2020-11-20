@@ -1,0 +1,9 @@
+﻿<Application x:Class="LyricCopier.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:LyricCopier"
+    StartupUri="MainWindow.xaml">
+  <Application.Resources>
+    <GridLength x:Key="DefaultMargin">10</GridLength>
+  </Application.Resources>
+</Application>
