@@ -15,7 +15,7 @@ namespace LyricCopier
         public string UserText             { get; set; }
         public int    LivestreamDelayInSec { get; set; } = 10;
 
-        public bool WaitForInsertKey { get; set; }
+        public bool WaitForInsertKey { get; set; } = true;
         public bool WaitForXSeconds  { get; set; }
 
         public InputSimulator InputSimulator { get; } = new InputSimulator();
