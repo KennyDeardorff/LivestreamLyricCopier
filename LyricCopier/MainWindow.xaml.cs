@@ -12,7 +12,11 @@ namespace LyricCopier
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string UserText { get; set; }
+        public string UserText             { get; set; }
+        public int    LivestreamDelayInSec { get; set; } = 10;
+
+        public bool WaitForInsertKey { get; set; }
+        public bool WaitForXSeconds  { get; set; }
 
         public InputSimulator InputSimulator { get; } = new InputSimulator();
 
@@ -28,8 +32,19 @@ namespace LyricCopier
             var textChunks = GetTextChunks();
 
             // Change focus to Livestream Studio
-            ChangeFocusToLivestream();
+            //ChangeFocusToLivestream();
 
+
+            // Delay before pasting text to give the user a chance to get into edit mode
+            if (WaitForInsertKey)
+                while (InputSimulator.InputDeviceState.IsHardwareKeyDown(VirtualKeyCode.INSERT) == false)
+                    Thread.Yield();
+
+            else if (WaitForXSeconds)
+                Thread.Sleep((int) TimeSpan
+                    .FromSeconds(LivestreamDelayInSec)
+                    .TotalMilliseconds);
+            
 
             // Paste text into Livestream
             PasteText(textChunks);
@@ -62,8 +77,6 @@ namespace LyricCopier
             InputSimulator.Keyboard.ModifiedKeyStroke(
                 VirtualKeyCode.MENU, // ALT is named MENU (?)
                 VirtualKeyCode.TAB);
-
-            Thread.Sleep(1000);
         }
 
         private void PasteText(List<List<string>> textChunks)
@@ -84,8 +97,6 @@ namespace LyricCopier
                 InputSimulator.Keyboard.KeyPress(VirtualKeyCode.TAB);
 
                 Thread.Sleep(50);
-                if (InputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.ESCAPE))
-                    return;
             }
         }
     }

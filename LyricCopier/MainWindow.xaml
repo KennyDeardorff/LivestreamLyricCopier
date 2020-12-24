@@ -1,37 +1,59 @@
 ﻿<Window x:Class="LyricCopier.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LyricCopier"
-        mc:Ignorable="d"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="LiveStream Lyric Copier" Height="300" Width="400">
-    <Grid>
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:LyricCopier"
+    mc:Ignorable="d"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Title="LiveStream Lyric Copier" Height="300" Width="400">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="{DynamicResource DefaultMargin}" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="{DynamicResource DefaultMargin}" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="{DynamicResource DefaultMargin}" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="{DynamicResource DefaultMargin}" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="{DynamicResource DefaultMargin}" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="{DynamicResource DefaultMargin}" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="{DynamicResource DefaultMargin}" />
+    </Grid.RowDefinitions>
+
+    <!-- Row 1 -->
+    <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap"
+        Text="Place text in the text box below that you want copied to LiveStream Studio. Use a blank line to separate slides. When ready to copy to LiveStream, click &quot;Copy to LiveStream Studio&quot;. Once clicked, the app will either wait for you to press the &quot;Insert&quot; key, or X number of seconds before trying to copy the text to LIvestream, depending on the radio button selection." />
+
+    <!-- Row 2 -->
+    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserText}" AcceptsReturn="True" />
+
+    <!-- Row 3 -->
+    <Button Grid.Row="5" Grid.Column="1" Content="Copy to LiveStream Studio" Click="Button_Click" />
+
+    <!-- Row 4 -->
+    <Grid Grid.Row="7" Grid.Column="1">
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="{DynamicResource DefaultMargin}"/>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="{DynamicResource DefaultMargin}"/>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="{DynamicResource DefaultMargin}"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="{DynamicResource DefaultMargin}"/>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="{DynamicResource DefaultMargin}"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="{DynamicResource DefaultMargin}"/>
-      </Grid.RowDefinitions>
 
-      <!-- Row 1 -->
-      <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap">
-        Place text in the text box below that you want copied to Livestream Studio. Use a blank line to separate slides. Before clicking 'Copy to...', place your cursor in the cell in Livestream Studio you want to start copying at. Press the 'ESC' key at any time to stop the copy.
-      </TextBlock>
-
-      <!-- Row 2 -->
-      <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserText}" AcceptsReturn="True" />
-
-      <!-- Row 3 -->
-      <Button Grid.Row="5" Grid.Column="1" Content="Copy to Livestream Studio" Click="Button_Click"/>
+      <RadioButton Grid.Column="0" Content="Wait for 'Insert' key press" IsChecked="{Binding WaitForInsertKey}" />
+      <RadioButton Grid.Column="1" IsChecked="{Binding WaitForXSeconds}">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock>
+            Wait
+          </TextBlock>
+          <TextBox Text="{Binding LivestreamDelayInSec}" MinWidth="40" Margin="6, 0" />
+          <TextBlock>
+            seconds
+          </TextBlock>
+        </StackPanel>
+      </RadioButton>
+    </Grid>
   </Grid>
 </Window>
